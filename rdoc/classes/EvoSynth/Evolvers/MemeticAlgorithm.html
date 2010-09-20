@@ -1,0 +1,457 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: EvoSynth::Evolvers::MemeticAlgorithm [EvoSynth Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">EvoSynth::Evolvers::MemeticAlgorithm</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../../files/lib/evosynth/evolvers/basic/memetic_algorithm_rb.html">
+
+                lib/evosynth/evolvers/basic/memetic_algorithm.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="../Evolver.html">
+
+                EvoSynth::Evolver
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+MEMETISCHER-ALGORITHMUS (Weicker Page 165) see also: <a
+href="http://en.wikipedia.org/wiki/Memetic_algorithm">en.wikipedia.org/wiki/Memetic_algorithm</a>
+for later improvments
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M000235">best_solution?</a>&nbsp;&nbsp;
+
+        <a href="#M000238">next_generation!</a>&nbsp;&nbsp;
+
+        <a href="#M000232">required_parameters?</a>&nbsp;&nbsp;
+
+        <a href="#M000237">result?</a>&nbsp;&nbsp;
+
+        <a href="#M000233">setup!</a>&nbsp;&nbsp;
+
+        <a href="#M000234">to_s</a>&nbsp;&nbsp;
+
+        <a href="#M000236">worst_solution?</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DEFAULT_CHILD_FACTOR</td>
+          <td>=</td>
+          <td class="context-item-value">0.5</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DEFAULT_RECOMBINATION_PROBABILITY</td>
+          <td>=</td>
+          <td class="context-item-value">1.0</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DEFAULT_RECOMBINATION</td>
+          <td>=</td>
+          <td class="context-item-value">EvoSynth::Recombinations::KPointCrossover.new(2)</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DEFAULT_INDIVIDUAL_LEARNING_GOAL</td>
+          <td>=</td>
+          <td class="context-item-value">-&gt;(evolver) { evolver.generations_computed == 10 }</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DEFAULT_INDIVIDUAL_LEARNING_PROBABILITY</td>
+          <td>=</td>
+          <td class="context-item-value">0.75</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DEFAULT_SELECTION</td>
+          <td>=</td>
+          <td class="context-item-value">EvoSynth::Selections::FitnessProportionalSelection.new</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M000235" class="method-detail">
+        <a name="M000235"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000235" class="method-signature">
+
+          <span class="method-name">best_solution?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000235-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000235-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/basic/memetic_algorithm.rb, line 65</span>
+65:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">best_solution?</span>
+66:                                 <span class="ruby-ivar">@population</span>.<span class="ruby-identifier">best</span>
+67:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000238" class="method-detail">
+        <a name="M000238"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000238" class="method-signature">
+
+          <span class="method-name">next_generation!</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000238-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000238-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/evolvers/basic/memetic_algorithm.rb, line 77</span>
+ 77:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">next_generation!</span>
+ 78:                                 <span class="ruby-identifier">selected_population</span> = <span class="ruby-ivar">@parent_selection</span>.<span class="ruby-identifier">select</span>(<span class="ruby-ivar">@population</span>, <span class="ruby-ivar">@population</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">*</span> <span class="ruby-ivar">@child_factor</span>)
+ 79:                                 <span class="ruby-identifier">child_population</span> = <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Population</span>.<span class="ruby-identifier">new</span>
+ 80: 
+ 81:                                 <span class="ruby-identifier">selected_population</span>.<span class="ruby-identifier">each_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">index_one</span><span class="ruby-operator">|</span>
+ 82:                                         <span class="ruby-identifier">index_two</span> = (<span class="ruby-identifier">index_one</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>) <span class="ruby-operator">%</span> <span class="ruby-identifier">selected_population</span>.<span class="ruby-identifier">size</span>
+ 83: 
+ 84:                                         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">EvoSynth</span>.<span class="ruby-identifier">rand</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@recombination_probability</span>
+ 85:                                                 <span class="ruby-identifier">child_one</span>, <span class="ruby-identifier">child_two</span> = <span class="ruby-ivar">@recombination</span>.<span class="ruby-identifier">recombine</span>(<span class="ruby-identifier">selected_population</span>[<span class="ruby-identifier">index_one</span>], <span class="ruby-identifier">selected_population</span>[<span class="ruby-identifier">index_two</span>])
+ 86:                                         <span class="ruby-keyword kw">else</span>
+ 87:                                                 <span class="ruby-identifier">child_one</span> = <span class="ruby-identifier">selected_population</span>[<span class="ruby-identifier">index_one</span>]
+ 88:                                                 <span class="ruby-identifier">child_two</span> = <span class="ruby-identifier">selected_population</span>[<span class="ruby-identifier">index_two</span>]
+ 89:                                         <span class="ruby-keyword kw">end</span>
+ 90: 
+ 91:                                         <span class="ruby-identifier">child_population</span>.<span class="ruby-identifier">add</span>(<span class="ruby-ivar">@mutation</span>.<span class="ruby-identifier">mutate</span>(<span class="ruby-identifier">child_one</span>))
+ 92:                                         <span class="ruby-identifier">child_population</span>.<span class="ruby-identifier">add</span>(<span class="ruby-ivar">@mutation</span>.<span class="ruby-identifier">mutate</span>(<span class="ruby-identifier">child_two</span>))
+ 93:                                 <span class="ruby-keyword kw">end</span>
+ 94: 
+ 95:                                 <span class="ruby-identifier">child_population</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">child</span><span class="ruby-operator">|</span>
+ 96:                                         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">EvoSynth</span>.<span class="ruby-identifier">rand</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@individual_learning_probability</span>
+ 97:                                                 <span class="ruby-identifier">sub_conf</span> = <span class="ruby-ivar">@subevolver_configuration</span>.<span class="ruby-identifier">clone</span>
+ 98:                                                 <span class="ruby-identifier">sub_conf</span>.<span class="ruby-identifier">individual</span> = <span class="ruby-identifier">child</span>
+ 99:                                                 <span class="ruby-identifier">subevolver</span> = <span class="ruby-ivar">@subevolver</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">sub_conf</span>)
+100:                                                 <span class="ruby-identifier">subevolver</span>.<span class="ruby-identifier">run_until</span> <span class="ruby-operator">&amp;</span><span class="ruby-ivar">@individual_learning_goal</span>
+101:                                         <span class="ruby-keyword kw">else</span>
+102:                                                 <span class="ruby-identifier">child</span>
+103:                                         <span class="ruby-keyword kw">end</span>
+104:                                 <span class="ruby-keyword kw">end</span>
+105: 
+106:                                 <span class="ruby-identifier">child_population</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">individual</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@evaluator</span>.<span class="ruby-identifier">calculate_and_set_fitness</span>(<span class="ruby-identifier">individual</span>) }
+107:                                 <span class="ruby-ivar">@population</span> = <span class="ruby-ivar">@enviromental_selection</span>.<span class="ruby-identifier">select</span>(<span class="ruby-identifier">child_population</span>, <span class="ruby-ivar">@population</span>.<span class="ruby-identifier">size</span>)
+108:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000232" class="method-detail">
+        <a name="M000232"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000232" class="method-signature">
+
+          <span class="method-name">required_parameters?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000232-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000232-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/basic/memetic_algorithm.rb, line 40</span>
+40:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">required_parameters?</span>
+41:                                 {
+42:                                         <span class="ruby-identifier">:population</span>                                                        =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">REQUIRED_PARAMETER</span>,
+43:                                         <span class="ruby-identifier">:evaluator</span>                                                 =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">REQUIRED_PARAMETER</span>,
+44:                                     <span class="ruby-identifier">:mutation</span>                                                       =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">REQUIRED_PARAMETER</span>,
+45:                                         <span class="ruby-identifier">:subevolver</span>                                                        =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">REQUIRED_PARAMETER</span>,
+46:                                         <span class="ruby-identifier">:subevolver_configuration</span>                  =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">REQUIRED_PARAMETER</span>,
+47:                                         <span class="ruby-identifier">:recombination</span>                                             =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">DEFAULT_RECOMBINATION</span>,
+48:                                         <span class="ruby-identifier">:parent_selection</span>                                  =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">DEFAULT_SELECTION</span>,
+49:                                         <span class="ruby-identifier">:enviromental_selection</span>                            =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">DEFAULT_SELECTION</span>,
+50:                                         <span class="ruby-identifier">:child_factor</span>                                              =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">DEFAULT_CHILD_FACTOR</span>,
+51:                                         <span class="ruby-identifier">:recombination_probability</span>                 =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">DEFAULT_RECOMBINATION_PROBABILITY</span>,
+52:                                         <span class="ruby-identifier">:individual_learning_goal</span>                  =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">DEFAULT_INDIVIDUAL_LEARNING_GOAL</span>,
+53:                                         <span class="ruby-identifier">:individual_learning_probability</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">DEFAULT_INDIVIDUAL_LEARNING_PROBABILITY</span>
+54:                                 }
+55:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000237" class="method-detail">
+        <a name="M000237"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000237" class="method-signature">
+
+          <span class="method-name">result?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000237-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000237-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/basic/memetic_algorithm.rb, line 73</span>
+73:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">result?</span>
+74:                                 <span class="ruby-ivar">@population</span>
+75:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000233" class="method-detail">
+        <a name="M000233"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000233" class="method-signature">
+
+          <span class="method-name">setup!</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000233-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000233-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/basic/memetic_algorithm.rb, line 57</span>
+57:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup!</span>
+58:                                 <span class="ruby-ivar">@population</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">individual</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@evaluator</span>.<span class="ruby-identifier">calculate_and_set_initial_fitness</span>(<span class="ruby-identifier">individual</span>) }
+59:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000234" class="method-detail">
+        <a name="M000234"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000234" class="method-signature">
+
+          <span class="method-name">to_s</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000234-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000234-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/basic/memetic_algorithm.rb, line 61</span>
+61:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+62:                                 <span class="ruby-value str">&quot;memetic algoritm&quot;</span>
+63:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000236" class="method-detail">
+        <a name="M000236"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000236" class="method-signature">
+
+          <span class="method-name">worst_solution?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000236-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000236-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/basic/memetic_algorithm.rb, line 69</span>
+69:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">worst_solution?</span>
+70:                                 <span class="ruby-ivar">@population</span>.<span class="ruby-identifier">worst</span>
+71:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: EvoSynth::Logger [EvoSynth Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">EvoSynth::Logger</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../files/lib/evosynth/core/logger_rb.html">
+
+                lib/evosynth/core/logger.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                Object
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+customizable (column based) logger
+</p>
+<pre>
+     logger = EvoSynth::Output::Logger.new(10, true,
+             &quot;gen&quot; =&gt; -&gt;{ evolver.generations_computed },
+             &quot;best&quot; =&gt; -&gt;{ configuration.population.best.fitness },
+             &quot;worst&quot; =&gt; -&gt;{ configuration.population.worst.fitness }
+     )
+     evolver.add_observer(logger)
+</pre>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M000283">add_column</a>&nbsp;&nbsp;
+
+        <a href="#M000284">clear_data!</a>&nbsp;&nbsp;
+
+        <a href="#M000286">create</a>&nbsp;&nbsp;
+
+        <a href="#M000282">new</a>&nbsp;&nbsp;
+
+        <a href="#M000285">update</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+
+        <span class="include-name">Observable</span>
+
+      </div>
+    </div>
+
+    <div id="section">
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DEFAULT_COLUMNS</td>
+          <td>=</td>
+          <td class="context-item-value">{                         :time                                                =&gt; -&gt;(observable) { Time.now },                          :eval_called                         =&gt; -&gt;(evaluator) { evaluator.called },                         :eval_calculated                     =&gt; -&gt;(evaluator) { evaluator.calculated },                          :evolver_eval_called         =&gt; -&gt;(evolver) { evolver.evaluator.called },                         :evolver_eval_calculated     =&gt; -&gt;(evolver) { evolver.evaluator.calculated },                          :gen                                         =&gt; -&gt;(evolver) { evolver.generations_computed },                         :best_to_s                                   =&gt; -&gt;(evolver) { evolver.best_solution?.to_s },                         :worst_to_s                                  =&gt; -&gt;(evolver) { evolver.worst_solution?.to_s },                          :best_fitness                                =&gt; -&gt;(evolver) { evolver.best_solution?.fitness },                         :worst_fitness                               =&gt; -&gt;(evolver) { evolver.worst_solution?.fitness },                                                  :pop_mean_fitness                    =&gt; -&gt;(evolver) { EvoSynth::EvoBench.population_fitness_mean(evolver.population) },                         :pop_median_fitness                  =&gt; -&gt;(evolver) { EvoSynth::EvoBench.population_fitness_median(evolver.population) },                                                  :pop_diversity_subseq                =&gt; -&gt;(evolver) { EvoSynth::EvoBench.diversity_subseq(evolver.population) },                         :pop_diversity_entropy               =&gt; -&gt;(evolver) { EvoSynth::EvoBench.diversity_entropy(evolver.population) },                         :pop_diversity_dist_float    =&gt; -&gt;(evolver) { EvoSynth::EvoBench.diversity_distance_float(evolver.population) },                         :pop_diversity_dist_hamming  =&gt; -&gt;(evolver) { EvoSynth::EvoBench.diversity_distance_hamming(evolver.population) }</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">data</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc"></td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">data_fetcher</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc"></td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">save_data</td>
+
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+
+          <td class="context-item-desc"></td>
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M000286" class="method-detail">
+        <a name="M000286"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000286" class="method-signature">
+
+          <span class="method-name">create</span><span class="method-args">(step, console_output, *columns) {|logger if block_given?| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+little logger factory
+</p>
+<p>
+WARNING: defaults will only work in combination with a evolver, not with a
+evaluator!
+</p>
+<p>
+examples:
+</p>
+<p>
+<a href="Logger.html#M000286">EvoSynth::Logger.create</a>(25, false,
+:gen,:best_fitness, :worst_fitness, :pop_diversity_subseq)
+</p>
+<p>
+logger = <a href="Logger.html#M000286">EvoSynth::Logger.create</a>(50,
+true, :gen, :best_fitness, :worst_fitness) do |log|
+</p>
+<pre>
+   log.add_column(&quot;sigma&quot;,    -&gt;(evolver) { evolver.sigma })
+   log.add_column(&quot;success&quot;,  -&gt;(evolver) { evolver.success })
+   log.add_column(&quot;s&quot;,        -&gt;(evolver) { evolver.s.inspect })
+</pre>
+<p>
+end
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000286-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000286-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/core/logger.rb, line 120</span>
+120:                 <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">step</span>, <span class="ruby-identifier">console_output</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">columns</span>)
+121:                         <span class="ruby-identifier">logger</span> = <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">step</span>)
+122:                         <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">add_observer</span>(<span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Export</span><span class="ruby-operator">::</span><span class="ruby-constant">ConsoleWriter</span>.<span class="ruby-identifier">new</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">console_output</span>
+123: 
+124:                         <span class="ruby-identifier">columns</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">col</span><span class="ruby-operator">|</span>
+125:                                 <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;unknown column name '#{col}'&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">DEFAULT_COLUMNS</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">col</span>)
+126:                                 <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">add_column</span>(<span class="ruby-identifier">col</span>, <span class="ruby-constant">DEFAULT_COLUMNS</span>[<span class="ruby-identifier">col</span>])
+127:                         <span class="ruby-keyword kw">end</span>
+128: 
+129:                         <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">logger</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+130:                         <span class="ruby-identifier">logger</span>
+131:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000282" class="method-detail">
+        <a name="M000282"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000282" class="method-signature">
+
+          <span class="method-name">new</span><span class="method-args">(log_step, save_data = true, things_to_log = {}) {|self if block_given?| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000282-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000282-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/core/logger.rb, line 74</span>
+74:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">log_step</span>, <span class="ruby-identifier">save_data</span> = <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">things_to_log</span> = {})
+75:                         <span class="ruby-ivar">@log_step</span> = <span class="ruby-identifier">log_step</span>
+76:                         <span class="ruby-ivar">@save_data</span> = <span class="ruby-identifier">save_data</span>
+77: 
+78:                         <span class="ruby-ivar">@data_fetcher</span> = <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Logging</span><span class="ruby-operator">::</span><span class="ruby-constant">DataFetcher</span>.<span class="ruby-identifier">new</span>
+79:                         <span class="ruby-ivar">@data</span> = <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Logging</span><span class="ruby-operator">::</span><span class="ruby-constant">DataSet</span>.<span class="ruby-identifier">new</span>
+80: 
+81:                         <span class="ruby-identifier">things_to_log</span>.<span class="ruby-identifier">each_pair</span>  { <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">lambda</span><span class="ruby-operator">|</span> <span class="ruby-identifier">add_column</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">lambda</span>) }
+82: 
+83:                         <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">self</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+84:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M000283" class="method-detail">
+        <a name="M000283"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000283" class="method-signature">
+
+          <span class="method-name">add_column</span><span class="method-args">(column_name, column_lambda)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000283-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000283-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/core/logger.rb, line 86</span>
+86:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_column</span>(<span class="ruby-identifier">column_name</span>, <span class="ruby-identifier">column_lambda</span>)
+87:                         <span class="ruby-ivar">@data_fetcher</span>.<span class="ruby-identifier">add_column</span>(<span class="ruby-identifier">column_name</span>, <span class="ruby-identifier">column_lambda</span>)
+88:                         <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">column_names</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">column_name</span>
+89:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000284" class="method-detail">
+        <a name="M000284"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000284" class="method-signature">
+
+          <span class="method-name">clear_data!</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000284-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000284-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/core/logger.rb, line 91</span>
+91:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">clear_data!</span>
+92:                         <span class="ruby-ivar">@data</span> = <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Logging</span><span class="ruby-operator">::</span><span class="ruby-constant">DataSet</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@data</span>.<span class="ruby-identifier">column_names</span>)
+93:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000285" class="method-detail">
+        <a name="M000285"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000285" class="method-signature">
+
+          <span class="method-name">update</span><span class="method-args">(observable, key)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000285-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000285-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/core/logger.rb, line 95</span>
+ 95:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update</span>(<span class="ruby-identifier">observable</span>, <span class="ruby-identifier">key</span>)
+ 96:                         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">key</span> <span class="ruby-operator">%</span> <span class="ruby-ivar">@log_step</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+ 97: 
+ 98:                         <span class="ruby-identifier">new_row</span> = <span class="ruby-ivar">@data_fetcher</span>.<span class="ruby-identifier">fetch_next_row</span>(<span class="ruby-identifier">observable</span>)
+ 99:                         <span class="ruby-ivar">@data</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">new_row</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@save_data</span>
+100: 
+101:                         <span class="ruby-identifier">changed</span>
+102:                         <span class="ruby-identifier">notify_observers</span> <span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">key</span>, <span class="ruby-identifier">new_row</span>
+103:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
