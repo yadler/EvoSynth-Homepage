@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<title>EvoSynth: Evolutionary Computation with Ruby - First Steps</title>
+		<link rel="stylesheet" type="text/css" href="/style.css" media="screen">
+		<meta name="generator" content="nanoc 3.1.5">
+		<meta charset="utf-8">
+		<meta name="author" content="Yves Adler" >
+		<meta name="keywords" content="ruby,framework,evolutionary algorithms,genetic algorithms,evolution strategy,prototyping">
+		<meta name="description" content="A framework for rapid development and prototyping of evolutionary algorithms.">
+		<meta name="google-site-verification" content="HIJULORCgdtNwcoqN1CYEpCr2rHs2LpEleiHsfsmlUU" />
+	</head>
+	<body>
+		<div id="header">
+			<div id="header_logo"/>
+		</div>
+		
+		<div id="main">
+			<p>First, we need to load the EvoSynth library</p>
+<div class="codebox">
+<pre><tt><b><font color="#000080">require</font></b> <font color="#FF0000">'evosynth'</font></tt></pre>
+</div>
+
+<p>Create a Evaluator subclass to implement the fitness function.</p>
+
+<p>You have to overwrite thhe calculate_fitness method, which will get an individual as parameter.
+This example function is the classic OnesMax function, which just count's the ones in a bitstring.</p>
+
+<div class="codebox">
+<pre><tt><b><font color="#0000FF">class</font></b> MyEvaluator <font color="#990000">&lt;</font> EvoSynth<font color="#990000">::</font>Evaluator
+	<b><font color="#0000FF">def</font></b> calculate_fitness<font color="#990000">(</font>individual<font color="#990000">)</font>
+		individual<font color="#990000">.</font>genome<font color="#990000">.</font>inject<font color="#990000">(</font><font color="#993399">0.0</font><font color="#990000">)</font> <font color="#FF0000">{</font> <font color="#990000">|</font>fitness<font color="#990000">,</font> gene<font color="#990000">|</font> fitness <font color="#990000">+=</font> gene <font color="#990000">?</font> <font color="#993399">1</font> <font color="#990000">:</font> <font color="#993399">0</font> <font color="#FF0000">}</font>
+	<b><font color="#0000FF">end</font></b>
+<b><font color="#0000FF">end</font></b></tt></pre>
+</div>
+
+<p>Create the hillclimber-evolver, it needs a individual, a evaluator and a mutation</p>
+
+<ul>
+	<li>we use a MaximizingIndividual (fitness will get maximized during the evolution), with a ArrayGenome, which contains 64 (random) booleans</li>
+	<li>as evaluator we use the MyEvaluator we've just created</li>
+	<li>lastly, we use the BinaryMutation to flip the boolean values in the genome</li>
+</ul>
+
+<div class="codebox">
+<pre><tt>evolver <font color="#990000">=</font> EvoSynth<font color="#990000">::</font>Evolvers<font color="#990000">::</font>Hillclimber<font color="#990000">.</font>new <b><font color="#0000FF">do</font></b> <font color="#990000">|</font>hc<font color="#990000">|</font>
+	hc<font color="#990000">.</font>evaluator	<font color="#990000">=</font> MyEvaluator<font color="#990000">.</font>new
+	hc<font color="#990000">.</font>individual	<font color="#990000">=</font> EvoSynth<font color="#990000">::</font>MaximizingIndividual<font color="#990000">.</font>new<font color="#990000">(</font> EvoSynth<font color="#990000">::</font>ArrayGenome<font color="#990000">.</font>new<font color="#990000">(</font><font color="#993399">64</font><font color="#990000">)</font> <font color="#FF0000">{</font> EvoSynth<font color="#990000">.</font>rand_bool <font color="#FF0000">}</font> <font color="#990000">)</font>
+	hc<font color="#990000">.</font>mutation	<font color="#990000">=</font> EvoSynth<font color="#990000">::</font>Mutations<font color="#990000">::</font>BinaryMutation<font color="#990000">.</font>new<font color="#990000">(</font>EvoSynth<font color="#990000">::</font>Mutations<font color="#990000">::</font>Functions<font color="#990000">::</font>FLIP_BOOLEAN<font color="#990000">)</font>
+<b><font color="#0000FF">end</font></b></tt></pre>
+</div>
+
+<p>Create a logger with console output using a factory method. This one will log the current generation, the best and the worst fitness every 500 generations:</p>
+
+<div class="codebox">
+<pre><tt>logger <font color="#990000">=</font> EvoSynth<font color="#990000">::</font>Logger<font color="#990000">.</font>create<font color="#990000">(</font><font color="#993399">500</font><font color="#990000">,</font> <b><font color="#0000FF">true</font></b><font color="#990000">,</font> <font color="#990000">:</font>gen<font color="#990000">,</font> <font color="#990000">:</font>best_fitness<font color="#990000">,</font> <font color="#990000">:</font>worst_fitness<font color="#990000">)</font>
+evolver<font color="#990000">.</font>add_observer<font color="#990000">(</font>logger<font color="#990000">)</font>
+</tt></pre>
+</div>
+
+<p>Finally run the hillclimber and print the result after the evolution. The hillclimber will stop, when the fitness function got called 5000 times.</p>
+
+<div class="codebox">
+<pre><tt>puts <font color="#FF0000">"\nRunning hillclimber...\n"</font>
+result <font color="#990000">=</font> evolver<font color="#990000">.</font>run_while <font color="#FF0000">{</font> <font color="#990000">|</font>hc<font color="#990000">|</font> hc<font color="#990000">.</font>evaluator<font color="#990000">.</font>called <font color="#990000">&lt;</font> <font color="#993399">5001</font> <font color="#FF0000">}</font>
+puts <font color="#FF0000">"\nIndividual after evolution:  #{result}"</font>
+</tt></pre>
+</div>
+		</div>
+		<div id="sidebar">
+			<h2>EvoSynth</h2>
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="/features/">Features</a></li>
+				<li><a href="/documentation/">Documentation</a></li>
+				<li><a href="/download/">Download</a></li>
+				<li><a href="/get_involved/">Get involved!</a></li>
+			</ul>
+
+			<h2>External</h2>
+			<ul>
+				<li><a href="https://yadler.wordpress.com/category/evosynth/" target="_blank">Development blog</a></li>
+				<li><a href="http://rubyforge.org/projects/evosynth/" target="_blank">Rubyforge project</a></li>
+				<li><a href="http://www.ohloh.net/p/evosynth" target="_blank">Ohloh statistics</a></li>
+			</ul>
+
+			<h2>Repositories</h2>
+			<ul>
+				<li><a href="http://github.com/yadler/EvoSynth" target="_blank">GitHub</a></li>
+				<li><a href="http://gitorious.org/evosynth" target="_blank">Gitorious</a></li>
+			</ul>
+
+	</body>
+</html>
