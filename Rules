@@ -24,8 +24,14 @@ end
 
 compile '*' do
   filter :erb
+  #~ filter :coderay, :language => :ruby
+  #~ filter :colorize_syntax, :colorizers => { :ruby => :coderay }
   layout 'default'
 end
+
+#~ compile '/tutorial01/' do
+  #~ filter :colorize_syntax, :colorizers => { :ruby => :coderay }, :coderay => { :line_numbers => :list }
+#~ end
 
 route '/stylesheet/' do
   '/style.css'
