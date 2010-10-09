@@ -1,0 +1,912 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: EvoSynth::Evolver [EvoSynth Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">EvoSynth::Evolver</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../files/lib/evosynth/core/evolver_rb.html">
+
+                lib/evosynth/core/evolver.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                Object
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Base-Class for evolvers. Create a subclass and implement the missing
+functionality to create your own <a href="Evolver.html">Evolver</a>.
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M000319">best_solution?</a>&nbsp;&nbsp;
+
+        <a href="#M000309">create_accessors_for_parameters</a>&nbsp;&nbsp;
+
+        <a href="#M000306">new</a>&nbsp;&nbsp;
+
+        <a href="#M000318">next_generation!</a>&nbsp;&nbsp;
+
+        <a href="#M000313">required_parameters?</a>&nbsp;&nbsp;
+
+        <a href="#M000307">reset!</a>&nbsp;&nbsp;
+
+        <a href="#M000321">result?</a>&nbsp;&nbsp;
+
+        <a href="#M000315">run_until</a>&nbsp;&nbsp;
+
+        <a href="#M000317">run_until_fitness_reached</a>&nbsp;&nbsp;
+
+        <a href="#M000316">run_until_generations_reached</a>&nbsp;&nbsp;
+
+        <a href="#M000314">run_while</a>&nbsp;&nbsp;
+
+        <a href="#M000310">set_default_values!</a>&nbsp;&nbsp;
+
+        <a href="#M000308">setup!</a>&nbsp;&nbsp;
+
+        <a href="#M000322">to_s</a>&nbsp;&nbsp;
+
+        <a href="#M000311">use_configuration</a>&nbsp;&nbsp;
+
+        <a href="#M000312">valid_configuration?</a>&nbsp;&nbsp;
+
+        <a href="#M000320">worst_solution?</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+
+        <span class="include-name">Observable</span>
+
+      </div>
+    </div>
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="Evolver/Goal.html" class="link">EvoSynth::Evolver::Goal</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">REQUIRED_PARAMETER</td>
+          <td>=</td>
+          <td class="context-item-value">nil</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+constant to improve readability
+
+</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">configuration</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc">
+returns the <a href="Configuration.html">Configuration</a> of the evolver
+
+</td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">generations_computed</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc">
+returns the number of generations that has been computed by the evolver
+
+</td>
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M000306" class="method-detail">
+        <a name="M000306"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000306" class="method-signature">
+
+          <span class="method-name">new</span><span class="method-args">(configuration = nil) {|self| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Creates a new <a href="Evolver.html">Evolver</a> using the given <a
+href="Configuration.html">Configuration</a>.
+</p>
+<p>
+<b>DO NOT OVERWRITE THIS</b>, except you what you do!
+</p>
+<p>
+usage:
+</p>
+<pre>
+   evolver = EvoSynth::Evolver.new(config)
+</pre>
+<p>
+or:
+</p>
+<pre>
+    evolver = EvoSynth::Evolver.new do |evolver|
+        evolver.individual = MaxOnes.create_individual
+        evolver.evaluator  = MaxOnes::MaxOnesEvaluator.new
+    end
+</pre>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000306-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000306-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/core/evolver.rb, line 61</span>
+61:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">configuration</span> = <span class="ruby-keyword kw">nil</span>) <span class="ruby-comment cmt">#:yields: self</span>
+62:                         <span class="ruby-ivar">@generations_computed</span> = <span class="ruby-value">0</span>
+63:                         <span class="ruby-ivar">@configuration</span> = <span class="ruby-keyword kw">nil</span>
+64: 
+65:                         <span class="ruby-identifier">create_accessors_for_parameters</span>(<span class="ruby-identifier">required_parameters?</span>)
+66:                         <span class="ruby-identifier">set_default_values!</span>
+67:                         <span class="ruby-identifier">use_configuration</span>(<span class="ruby-identifier">configuration</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">nil?</span>
+68:                         <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">self</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+69:                         <span class="ruby-identifier">valid_configuration?</span>
+70:                         <span class="ruby-identifier">setup!</span>
+71:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M000319" class="method-detail">
+        <a name="M000319"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000319" class="method-signature">
+
+          <span class="method-name">best_solution?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+this function should return the best solution
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000319-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000319-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/core/evolver.rb, line 210</span>
+210:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">best_solution?</span>
+211:                         <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>
+212:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000309" class="method-detail">
+        <a name="M000309"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000309" class="method-signature">
+
+          <span class="method-name">create_accessors_for_configuration(configuration_hash)<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+initializes the evolver with the needed configuration parameters
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000309-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000309-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/core/evolver.rb, line 94</span>
+94:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_accessors_for_parameters</span>(<span class="ruby-identifier">parameters</span>)
+95:                         <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;argument type not supported&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">parameters</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+96: 
+97:                         <span class="ruby-ivar">@parameters</span> = <span class="ruby-identifier">parameters</span>
+98:                         <span class="ruby-ivar">@parameters</span>.<span class="ruby-identifier">each_key</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">:attr_accessor</span>, <span class="ruby-identifier">key</span>) }
+99:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000318" class="method-detail">
+        <a name="M000318"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000318" class="method-signature">
+
+          <span class="method-name">next_generation!</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+implement this to generate the next generation (individuals, whatever) of
+your evolver
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000318-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000318-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/core/evolver.rb, line 204</span>
+204:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">next_generation!</span>
+205:                         <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>
+206:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000313" class="method-detail">
+        <a name="M000313"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000313" class="method-signature">
+
+          <span class="method-name">required_parameters? &rarr; Hash<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+overwrite this, it should return a hash containing the required parameters.
+</p>
+<p>
+key is the accessor-name, value is default or REQUIRED_PARAMETER (nil)
+</p>
+<p>
+example:
+</p>
+<pre>
+    def required_parameters?
+    {
+        :population                 =&gt; REQUIRED_PARAMETER,
+        :evaluator                  =&gt; REQUIRED_PARAMETER,
+        :mutation                   =&gt; REQUIRED_PARAMETER,
+        :parent_selection           =&gt; DEFAULT_SELECTION,
+        :recombination              =&gt; DEFAULT_RECOMBINATION,
+        :recombination_probability  =&gt; DEFAULT_RECOMBINATION_PROBABILITY,
+        :child_factor               =&gt; DEFAULT_CHILD_FACTOR
+    }
+    end
+</pre>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000313-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000313-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/core/evolver.rb, line 151</span>
+151:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">required_parameters?</span>
+152:                         <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>
+153:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000307" class="method-detail">
+        <a name="M000307"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000307" class="method-signature">
+
+          <span class="method-name">reset!</span><span class="method-args">(configuration = nil)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+TODO: rdoc
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000307-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000307-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/core/evolver.rb, line 75</span>
+75:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reset!</span>(<span class="ruby-identifier">configuration</span> = <span class="ruby-keyword kw">nil</span>)
+76:                         <span class="ruby-identifier">set_default_values!</span>
+77:                         <span class="ruby-identifier">use_configuration</span>(<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-value">? </span><span class="ruby-ivar">@configuration</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">configuration</span>)
+78:                         <span class="ruby-identifier">valid_configuration?</span>
+79:                         <span class="ruby-identifier">setup!</span>
+80:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000321" class="method-detail">
+        <a name="M000321"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000321" class="method-signature">
+
+          <span class="method-name">result?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+this function should return the &#8220;result&#8221; of the evolver, it
+will get called at the end of <a href="Evolver.html#M000314">run_while</a>
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000321-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000321-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/core/evolver.rb, line 222</span>
+222:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">result?</span>
+223:                         <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>
+224:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000315" class="method-detail">
+        <a name="M000315"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000315" class="method-signature">
+
+          <span class="method-name">run_until</span><span class="method-args">() {|evolver| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+be compatible to <a href="../EvoSynth.html">EvoSynth</a> 0.1
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000315-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000315-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/core/evolver.rb, line 185</span>
+185:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run_until</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">condition</span>) <span class="ruby-comment cmt"># :yields: evolver</span>
+186:                         <span class="ruby-identifier">run_while</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">evolver</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">evolver</span>}
+187:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000317" class="method-detail">
+        <a name="M000317"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000317" class="method-signature">
+
+          <span class="method-name">run_until_fitness_reached</span><span class="method-args">(fitness)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+wrapper for <a href="Evolver.html#M000314">run_while</a>, constructs a <a
+href="Evolver/Goal.html">Goal</a> class to use the <=> to compare the
+fitness values
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000317-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000317-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/core/evolver.rb, line 197</span>
+197:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run_until_fitness_reached</span>(<span class="ruby-identifier">fitness</span>)
+198:                         <span class="ruby-identifier">goal</span> = <span class="ruby-constant">Goal</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">fitness</span>)
+199:                         <span class="ruby-identifier">run_while</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">evolver</span><span class="ruby-operator">|</span> <span class="ruby-identifier">evolver</span>.<span class="ruby-identifier">best_solution?</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-identifier">goal</span> }
+200:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000316" class="method-detail">
+        <a name="M000316"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000316" class="method-signature">
+
+          <span class="method-name">run_until_generations_reached</span><span class="method-args">(max_generations)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+wrapper for <a href="Evolver.html#M000314">run_while</a> { |gen| gen ==
+max_generations}
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000316-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000316-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/core/evolver.rb, line 191</span>
+191:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run_until_generations_reached</span>(<span class="ruby-identifier">max_generations</span>)
+192:                         <span class="ruby-identifier">run_until</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">evolver</span><span class="ruby-operator">|</span> <span class="ruby-identifier">evolver</span>.<span class="ruby-identifier">generations_computed</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">max_generations</span> }
+193:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000314" class="method-detail">
+        <a name="M000314"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000314" class="method-signature">
+
+          <span class="method-name">run_while</span><span class="method-args">() {|evolver, generations_computed| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+this function start the computation of the evolver, the given block is
+called each generation to check if the next generation should be computed.
+possible arities of the block are 0,1 and 2. returns result?.
+</p>
+<p>
+example:
+</p>
+<pre>
+    Evolver.run_while { am_i_skynet? }                                     # &quot;external&quot; stop criteria
+    Evolver.run_while { |evolver| evovler.generations_computed &lt;= 42 }     # run 42 generations
+
+    # run 42 generations or stop if a fitness of 0.0 has been reached:
+    Evolver.run_while { |evovler| evovler.generations_computed &lt;= 42 and evovler.best_solution?.fitness &gt; 0.0 }
+</pre>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000314-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000314-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/core/evolver.rb, line 168</span>
+168:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run_while</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">condition</span>) <span class="ruby-comment cmt"># :yields: evolver, generations_computed</span>
+169:                         <span class="ruby-ivar">@generations_computed</span> = <span class="ruby-value">0</span>
+170:                         <span class="ruby-identifier">changed</span>
+171:                         <span class="ruby-identifier">notify_observers</span> <span class="ruby-keyword kw">self</span>, <span class="ruby-ivar">@generations_computed</span>
+172: 
+173:                         <span class="ruby-keyword kw">while</span> <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">self</span>
+174:                                 <span class="ruby-identifier">next_generation!</span>
+175:                                 <span class="ruby-ivar">@generations_computed</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+176:                                 <span class="ruby-identifier">changed</span>
+177:                                 <span class="ruby-identifier">notify_observers</span> <span class="ruby-keyword kw">self</span>, <span class="ruby-ivar">@generations_computed</span>
+178:                         <span class="ruby-keyword kw">end</span>
+179: 
+180:                         <span class="ruby-identifier">result?</span>
+181:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000310" class="method-detail">
+        <a name="M000310"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000310" class="method-signature">
+
+          <span class="method-name">set_default_values!</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+TODO: rdoc
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000310-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000310-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/core/evolver.rb, line 103</span>
+103:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_default_values!</span>
+104:                         <span class="ruby-ivar">@parameters</span>.<span class="ruby-identifier">each_pair</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">default</span><span class="ruby-operator">|</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{key.id2name}=&quot;</span>.<span class="ruby-identifier">to_sym</span>, <span class="ruby-identifier">default</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">default</span>.<span class="ruby-identifier">nil?</span> }
+105:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000308" class="method-detail">
+        <a name="M000308"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000308" class="method-signature">
+
+          <span class="method-name">setup!</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Called by constructor. Use this function to initialize your <a
+href="Evolver.html">Evolver</a>. (instead of overwriting the constructor!)
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000308-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000308-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/core/evolver.rb, line 85</span>
+85:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup!</span>
+86:                         <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>
+87:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000322" class="method-detail">
+        <a name="M000322"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000322" class="method-signature">
+
+          <span class="method-name">to_s</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+returns a human-readable representation of the evolver
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000322-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000322-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/core/evolver.rb, line 228</span>
+228:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+229:                         <span class="ruby-value str">&quot;evolver&quot;</span>
+230:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000311" class="method-detail">
+        <a name="M000311"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000311" class="method-signature">
+
+          <span class="method-name">use_configuration(Configuration)<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+use a given configuration (deep clones the given configuration!!) and check
+if it is valid
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000311-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000311-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/core/evolver.rb, line 112</span>
+112:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">use_configuration</span>(<span class="ruby-identifier">configuration</span>) <span class="ruby-comment cmt">#:yields: self</span>
+113:                         <span class="ruby-identifier">set_configuration</span>(<span class="ruby-identifier">configuration</span>)
+114:                         <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">self</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+115:                         <span class="ruby-identifier">valid_configuration?</span>
+116:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000312" class="method-detail">
+        <a name="M000312"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000312" class="method-signature">
+
+          <span class="method-name">valid_configuration? &rarr; True/False<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+check if the current evolver configuration is complete and valid
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000312-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000312-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/core/evolver.rb, line 123</span>
+123:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">valid_configuration?</span>
+124:                         <span class="ruby-ivar">@parameters</span>.<span class="ruby-identifier">each_key</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+125:                                 <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;evolver configuration is missing '#{key.id2name}' parameter&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">key</span>).<span class="ruby-identifier">nil?</span>
+126:                         <span class="ruby-keyword kw">end</span>
+127:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000320" class="method-detail">
+        <a name="M000320"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000320" class="method-signature">
+
+          <span class="method-name">worst_solution?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+this function should return the worst solution
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000320-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000320-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/core/evolver.rb, line 216</span>
+216:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">worst_solution?</span>
+217:                         <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotImplementedError</span>
+218:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
