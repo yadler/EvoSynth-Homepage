@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 	<head>
-		<title>EvoSynth: Evolutionary Computation with Ruby - First Steps</title>
+		<title>EvoSynth: Evolutionary Computation with Ruby - 1st Tutorial - First Steps</title>
 		<link rel="stylesheet" type="text/css" href="/style.css" media="screen">
 		<meta name="generator" content="nanoc 3.1.5">
 		<meta charset="utf-8">
@@ -62,8 +62,10 @@ http://www.gnu.org/software/src-highlite -->
 <pre><tt>
 evolver <font color="#990000">=</font> EvoSynth<font color="#990000">::</font>Evolvers<font color="#990000">::</font>Hillclimber<font color="#990000">.</font>new <b><font color="#0000FF">do</font></b> <font color="#990000">|</font>hc<font color="#990000">|</font>
     hc<font color="#990000">.</font>evaluator  <font color="#990000">=</font> MyEvaluator<font color="#990000">.</font>new
+    
     hc<font color="#990000">.</font>individual <font color="#990000">=</font> EvoSynth<font color="#990000">::</font>MaximizingIndividual<font color="#990000">.</font>new<font color="#990000">(</font> 
             EvoSynth<font color="#990000">::</font>ArrayGenome<font color="#990000">.</font>new<font color="#990000">(</font><font color="#993399">64</font><font color="#990000">)</font> <font color="#FF0000">{</font> EvoSynth<font color="#990000">.</font>rand_bool <font color="#FF0000">}</font> <font color="#990000">)</font>
+            
     hc<font color="#990000">.</font>mutation   <font color="#990000">=</font> EvoSynth<font color="#990000">::</font>Mutations<font color="#990000">::</font>BinaryMutation<font color="#990000">.</font>new<font color="#990000">(</font>
             EvoSynth<font color="#990000">::</font>Mutations<font color="#990000">::</font>Functions<font color="#990000">::</font>FLIP_BOOLEAN<font color="#990000">)</font>
 <b><font color="#0000FF">end</font></b>

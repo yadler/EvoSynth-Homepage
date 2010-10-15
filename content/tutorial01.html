@@ -1,5 +1,5 @@
 --- 
-title: First Steps
+title: 1st Tutorial - First Steps
 ---
 
 <p>First, we need to load the EvoSynth library</p>
@@ -32,8 +32,10 @@ end
 <% filter :src_filter do %>
 evolver = EvoSynth::Evolvers::Hillclimber.new do |hc|
     hc.evaluator  = MyEvaluator.new
+    
     hc.individual = EvoSynth::MaximizingIndividual.new( 
             EvoSynth::ArrayGenome.new(64) { EvoSynth.rand_bool } )
+            
     hc.mutation   = EvoSynth::Mutations::BinaryMutation.new(
             EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 end

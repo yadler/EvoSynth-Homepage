@@ -1,0 +1,70 @@
+--- 
+title: 2nd Tutorial - Configuration
+---
+
+<p>We will use the evaluator from the <a href="/tutorial01/">first tutorial:</a></p>
+
+<% filter :src_filter do %>
+class MyEvaluator < EvoSynth::Evaluator
+    def calculate_fitness(individual)
+        individual.genome.inject(0.0) { |fitness, gene| fitness += gene ? 1 : 0 }
+    end
+end
+<% end %>
+	
+<p>If we want to try more than one evolutionary algorithm we can use the configuration class to keep all operators and datastructures in one place. The use of a configuration is in most cases optional and only makes sense when more than one algorithm comes into play.</p>
+
+<p>Here we will use the hillclimber from lesson one and a genetic algorithm, therefor we've to provide a individual AND a population in our configuration.</p>
+
+<% filter :src_filter do %>
+configuration = EvoSynth::Configuration.new do |conf|
+    conf.evaluator  = MyEvaluator.new
+    
+    conf.mutation   = EvoSynth::Mutations::BinaryMutation.new(
+            EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
+            
+    conf.individual = EvoSynth::MaximizingIndividual.new(
+            EvoSynth::ArrayGenome.new(64) { EvoSynth.rand_bool } )
+            
+    conf.population = EvoSynth::Population.new(20) { 
+            EvoSynth::MaximizingIndividual.new(
+                    EvoSynth::ArrayGenome.new(64) { EvoSynth.rand_bool } ) }
+end
+<% end %>
+
+<p>Create a hillclimber with the configuration and add a logger as observer.</p>
+
+<% filter :src_filter do %>
+hc = EvoSynth::Evolvers::Hillclimber.new(configuration)
+hc.add_observer(EvoSynth::Logger.create(500, true, :gen, :best_fitness, :worst_fitness))
+<% end %>
+
+<p>Run the hillclimber...</p>
+
+<% filter :src_filter do %>
+puts "Running Hillclimber..."
+result = hc.run_while { configuration.evaluator.called < 5000 }
+puts "Individual after evolution:  #{configuration.individual}"
+<% end %>
+
+<p>Don't forget to reset the counters of the evaluator!</p>
+
+<% filter :src_filter do %>
+configuration.evaluator.reset_counters
+<% end %>
+
+<p>Create a genetic algorithm (with weak elitism) with the configuration and add a logger as observer.</p>
+
+<% filter :src_filter do %>
+ga = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
+EvoSynth::Evolvers.add_weak_elistism(ga)
+ga.add_observer(EvoSynth::Logger.create(25, true, :gen, :best_fitness, :worst_fitness))
+<% end %>
+
+<p>Run the GA...</p>
+
+<% filter :src_filter do %>
+puts "Running Genetic Algorithm with elitism..."
+result = ga.run_while { configuration.evaluator.called < 5000 }
+puts "Best Individual after evolution:  #{result.best}"
+<% end %>

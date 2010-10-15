@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<title>EvoSynth: Evolutionary Computation with Ruby - 2nd Tutorial - Configuration</title>
+		<link rel="stylesheet" type="text/css" href="/style.css" media="screen">
+		<meta name="generator" content="nanoc 3.1.5">
+		<meta charset="utf-8">
+		<meta name="author" content="Yves Adler" >
+		<meta name="keywords" content="ruby,framework,evolutionary algorithms,genetic algorithms,evolution strategy,prototyping">
+		<meta name="description" content="A framework for rapid development and prototyping of evolutionary algorithms.">
+		<meta name="google-site-verification" content="HIJULORCgdtNwcoqN1CYEpCr2rHs2LpEleiHsfsmlUU" />
+	</head>
+	<body>
+		<div id="header">
+			<div id="header_logo"/>
+		</div>
+		
+		<div id="main">
+			<p>We will use the evaluator from the <a href="/tutorial01/">first tutorial:</a></p>
+
+<div class="codebox"><!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>
+<b><font color="#0000FF">class</font></b> MyEvaluator <font color="#990000">&lt;</font> EvoSynth<font color="#990000">::</font>Evaluator
+    <b><font color="#0000FF">def</font></b> calculate_fitness<font color="#990000">(</font>individual<font color="#990000">)</font>
+        individual<font color="#990000">.</font>genome<font color="#990000">.</font>inject<font color="#990000">(</font><font color="#993399">0.0</font><font color="#990000">)</font> <font color="#FF0000">{</font> <font color="#990000">|</font>fitness<font color="#990000">,</font> gene<font color="#990000">|</font> fitness <font color="#990000">+=</font> gene <font color="#990000">?</font> <font color="#993399">1</font> <font color="#990000">:</font> <font color="#993399">0</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">end</font></b>
+<b><font color="#0000FF">end</font></b>
+
+</tt></pre>
+</div>
+	
+<p>If we want to try more than one evolutionary algorithm we can use the configuration class to keep all operators and datastructures in one place. The use of a configuration is in most cases optional and only makes sense when more than one algorithm comes into play.</p>
+
+<p>Here we will use the hillclimber from lesson one and a genetic algorithm, therefor we've to provide a individual AND a population in our configuration.</p>
+
+<div class="codebox"><!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>
+configuration <font color="#990000">=</font> EvoSynth<font color="#990000">::</font>Configuration<font color="#990000">.</font>new <b><font color="#0000FF">do</font></b> <font color="#990000">|</font>conf<font color="#990000">|</font>
+    conf<font color="#990000">.</font>evaluator  <font color="#990000">=</font> MyEvaluator<font color="#990000">.</font>new
+    
+    conf<font color="#990000">.</font>mutation   <font color="#990000">=</font> EvoSynth<font color="#990000">::</font>Mutations<font color="#990000">::</font>BinaryMutation<font color="#990000">.</font>new<font color="#990000">(</font>
+            EvoSynth<font color="#990000">::</font>Mutations<font color="#990000">::</font>Functions<font color="#990000">::</font>FLIP_BOOLEAN<font color="#990000">)</font>
+            
+    conf<font color="#990000">.</font>individual <font color="#990000">=</font> EvoSynth<font color="#990000">::</font>MaximizingIndividual<font color="#990000">.</font>new<font color="#990000">(</font>
+            EvoSynth<font color="#990000">::</font>ArrayGenome<font color="#990000">.</font>new<font color="#990000">(</font><font color="#993399">64</font><font color="#990000">)</font> <font color="#FF0000">{</font> EvoSynth<font color="#990000">.</font>rand_bool <font color="#FF0000">}</font> <font color="#990000">)</font>
+            
+    conf<font color="#990000">.</font>population <font color="#990000">=</font> EvoSynth<font color="#990000">::</font>Population<font color="#990000">.</font>new<font color="#990000">(</font><font color="#993399">20</font><font color="#990000">)</font> <font color="#FF0000">{</font> 
+            EvoSynth<font color="#990000">::</font>MaximizingIndividual<font color="#990000">.</font>new<font color="#990000">(</font>
+                    EvoSynth<font color="#990000">::</font>ArrayGenome<font color="#990000">.</font>new<font color="#990000">(</font><font color="#993399">64</font><font color="#990000">)</font> <font color="#FF0000">{</font> EvoSynth<font color="#990000">.</font>rand_bool <font color="#FF0000">}</font> <font color="#990000">)</font> <font color="#FF0000">}</font>
+<b><font color="#0000FF">end</font></b>
+
+</tt></pre>
+</div>
+
+<p>Create a hillclimber with the configuration and add a logger as observer.</p>
+
+<div class="codebox"><!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>
+hc <font color="#990000">=</font> EvoSynth<font color="#990000">::</font>Evolvers<font color="#990000">::</font>Hillclimber<font color="#990000">.</font>new<font color="#990000">(</font>configuration<font color="#990000">)</font>
+hc<font color="#990000">.</font>add_observer<font color="#990000">(</font>EvoSynth<font color="#990000">::</font>Logger<font color="#990000">.</font>create<font color="#990000">(</font><font color="#993399">500</font><font color="#990000">,</font> <b><font color="#0000FF">true</font></b><font color="#990000">,</font> <font color="#990000">:</font>gen<font color="#990000">,</font> <font color="#990000">:</font>best_fitness<font color="#990000">,</font> <font color="#990000">:</font>worst_fitness<font color="#990000">))</font>
+
+</tt></pre>
+</div>
+
+<p>Run the hillclimber...</p>
+
+<div class="codebox"><!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>
+puts <font color="#FF0000">"Running Hillclimber..."</font>
+result <font color="#990000">=</font> hc<font color="#990000">.</font>run_while <font color="#FF0000">{</font> configuration<font color="#990000">.</font>evaluator<font color="#990000">.</font>called <font color="#990000">&lt;</font> <font color="#993399">5000</font> <font color="#FF0000">}</font>
+puts <font color="#FF0000">"Individual after evolution:  #{configuration.individual}"</font>
+
+</tt></pre>
+</div>
+
+<p>Don't forget to reset the counters of the evaluator!</p>
+
+<div class="codebox"><!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>
+configuration<font color="#990000">.</font>evaluator<font color="#990000">.</font>reset_counters
+
+</tt></pre>
+</div>
+
+<p>Create a genetic algorithm (with weak elitism) with the configuration and add a logger as observer.</p>
+
+<div class="codebox"><!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>
+ga <font color="#990000">=</font> EvoSynth<font color="#990000">::</font>Evolvers<font color="#990000">::</font>GeneticAlgorithm<font color="#990000">.</font>new<font color="#990000">(</font>configuration<font color="#990000">)</font>
+EvoSynth<font color="#990000">::</font>Evolvers<font color="#990000">.</font>add_weak_elistism<font color="#990000">(</font>ga<font color="#990000">)</font>
+ga<font color="#990000">.</font>add_observer<font color="#990000">(</font>EvoSynth<font color="#990000">::</font>Logger<font color="#990000">.</font>create<font color="#990000">(</font><font color="#993399">25</font><font color="#990000">,</font> <b><font color="#0000FF">true</font></b><font color="#990000">,</font> <font color="#990000">:</font>gen<font color="#990000">,</font> <font color="#990000">:</font>best_fitness<font color="#990000">,</font> <font color="#990000">:</font>worst_fitness<font color="#990000">))</font>
+
+</tt></pre>
+</div>
+
+<p>Run the GA...</p>
+
+<div class="codebox"><!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>
+puts <font color="#FF0000">"Running Genetic Algorithm with elitism..."</font>
+result <font color="#990000">=</font> ga<font color="#990000">.</font>run_while <font color="#FF0000">{</font> configuration<font color="#990000">.</font>evaluator<font color="#990000">.</font>called <font color="#990000">&lt;</font> <font color="#993399">5000</font> <font color="#FF0000">}</font>
+puts <font color="#FF0000">"Best Individual after evolution:  #{result.best}"</font>
+
+</tt></pre>
+</div>
+		</div>
+		<div id="sidebar">
+			<h2>EvoSynth</h2>
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="/features/">Features</a></li>
+				<li><a href="/documentation/">Documentation</a></li>
+				<li><a href="/download/">Download</a></li>
+				<li><a href="/get_involved/">Get involved!</a></li>
+			</ul>
+
+			<h2>External</h2>
+			<ul>
+				<li><a href="https://yadler.wordpress.com/category/evosynth/" target="_blank">Development blog</a></li>
+				<li><a href="http://rubyforge.org/projects/evosynth/" target="_blank">Rubyforge project</a></li>
+				<li><a href="http://www.ohloh.net/p/evosynth" target="_blank">Ohloh statistics</a></li>
+			</ul>
+
+			<h2>Repositories</h2>
+			<ul>
+				<li><a href="http://github.com/yadler/EvoSynth" target="_blank">GitHub</a></li>
+				<li><a href="http://gitorious.org/evosynth" target="_blank">Gitorious</a></li>
+			</ul>
+
+	</body>
+</html>
