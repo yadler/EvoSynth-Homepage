@@ -1,13 +1,9 @@
 .codebox {
-/*
 	background-color:#FFFFFF;
-*/
 	font-size: small;
 	line-height: 1.2em;
-/*
-	width: 3px;
-*/
-	padding:1px;
+	margin:0px;
+	padding:0px;
 	padding-left:10px;
 	padding-right:10px;
 }
