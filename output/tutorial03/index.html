@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<title>EvoSynth: Evolutionary Computation with Ruby - Custom operators</title>
+		<link rel="stylesheet" type="text/css" href="/style.css" media="screen">
+		<meta name="generator" content="nanoc 3.1.5">
+		<meta charset="utf-8">
+		<meta name="author" content="Yves Adler" >
+		<meta name="keywords" content="ruby,framework,evolutionary algorithms,genetic algorithms,evolution strategy,prototyping">
+		<meta name="description" content="A framework for rapid development and prototyping of evolutionary algorithms.">
+		<meta name="google-site-verification" content="HIJULORCgdtNwcoqN1CYEpCr2rHs2LpEleiHsfsmlUU" />
+	</head>
+	<body>
+		<div id="header">
+			<div id="header_logo"/>
+		</div>
+		
+		<div id="main">
+			<p>Load the EvoSynth library.</p>
+
+<div class="codebox"><!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>
+<b><font color="#000080">require</font></b> <font color="#FF0000">'evosynth'</font>
+
+</tt></pre>
+</div>
+
+<p>We create a simple bitflipping mutation. All we've to do is to create a class with mutate method that takes a individual as its argument.</p>
+
+<p><i>Hint:</i> You can always use the identity-operators as a skeleton for your own operators.</p>
+
+<div class="codebox"><!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>
+<b><font color="#0000FF">class</font></b> MyMutation
+    <b><font color="#0000FF">def</font></b> mutate<font color="#990000">(</font>individual<font color="#990000">)</font>
+        <i><font color="#9A1900"># ALWAYS deep_clone the given individual!</font></i>
+        mutated <font color="#990000">=</font> individual<font color="#990000">.</font>deep_clone
+        <i><font color="#9A1900"># mutate and return the cloned individual</font></i>
+        rand_index <font color="#990000">=</font> EvoSynth<font color="#990000">.</font>rand<font color="#990000">(</font>mutated<font color="#990000">.</font>genome<font color="#990000">.</font>size<font color="#990000">)</font>
+        mutated<font color="#990000">.</font>genome<font color="#990000">[</font>rand_index<font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">!</font>mutated<font color="#990000">.</font>genome<font color="#990000">[</font>rand_index<font color="#990000">]</font>
+        mutated
+    <b><font color="#0000FF">end</font></b>
+<b><font color="#0000FF">end</font></b>
+
+</tt></pre>
+</div>
+
+<p>Next we create a stupid recombination. This time we've to overwrite the recombine method, which takes two individuals as arguments and returns a array of two individuals.</p>
+
+<div class="codebox"><!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>
+<b><font color="#0000FF">class</font></b> MyRecombination
+    <b><font color="#0000FF">def</font></b> recombine<font color="#990000">(</font>individual_one<font color="#990000">,</font> individual_two<font color="#990000">)</font>
+        <i><font color="#9A1900"># ALWAYS deep_clone the given individuals!</font></i>
+        child_one <font color="#990000">=</font> individual_one<font color="#990000">.</font>deep_clone
+        child_two <font color="#990000">=</font> individual_two<font color="#990000">.</font>deep_clone
+        <i><font color="#9A1900"># recombine and return the cloned individuals</font></i>
+        index <font color="#990000">=</font> EvoSynth<font color="#990000">.</font>rand<font color="#990000">(</font>child_one<font color="#990000">.</font>genome<font color="#990000">.</font>size<font color="#990000">)</font>
+        
+        child_one<font color="#990000">.</font>genome<font color="#990000">[</font>index<font color="#990000">],</font> child_two<font color="#990000">.</font>genome<font color="#990000">[</font>index<font color="#990000">]</font> <font color="#990000">=</font> 
+                child_two<font color="#990000">.</font>genome<font color="#990000">[</font>index<font color="#990000">],</font> child_one<font color="#990000">.</font>genome<font color="#990000">[</font>index<font color="#990000">]</font>
+                
+        <font color="#990000">[</font>child_one<font color="#990000">,</font> child_two<font color="#990000">]</font>
+    <b><font color="#0000FF">end</font></b>
+<b><font color="#0000FF">end</font></b>
+
+</tt></pre>
+</div>
+
+<p>Now we create a (random) selection. To do this we've to overwrite the select method, which takes a population and a number of individuals to select as arguments.</p>
+
+<div class="codebox"><!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>
+<b><font color="#0000FF">class</font></b> MySelection
+    <b><font color="#0000FF">def</font></b> select<font color="#990000">(</font>population<font color="#990000">,</font> select_count <font color="#990000">=</font> <font color="#993399">1</font><font color="#990000">)</font>
+        selected_population <font color="#990000">=</font> EvoSynth<font color="#990000">::</font>Population<font color="#990000">.</font>new
+        select_count<font color="#990000">.</font>times <font color="#FF0000">{</font> 
+                selected_population <font color="#990000">&lt;&lt;</font> population<font color="#990000">[</font>EvoSynth<font color="#990000">.</font>rand<font color="#990000">(</font>population<font color="#990000">.</font>size<font color="#990000">)]</font> <font color="#FF0000">}</font>
+           
+        selected_population
+    <b><font color="#0000FF">end</font></b>
+<b><font color="#0000FF">end</font></b>
+
+</tt></pre>
+</div>
+
+<p>We use the evaluator and logger from the first tutorial.</p>
+
+<div class="codebox"><!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>
+<b><font color="#0000FF">class</font></b> MyEvaluator <font color="#990000">&lt;</font> EvoSynth<font color="#990000">::</font>Evaluator
+    <b><font color="#0000FF">def</font></b> calculate_fitness<font color="#990000">(</font>individual<font color="#990000">)</font>
+        individual<font color="#990000">.</font>genome<font color="#990000">.</font>inject<font color="#990000">(</font><font color="#993399">0.0</font><font color="#990000">)</font> <font color="#FF0000">{</font> <font color="#990000">|</font>fitness<font color="#990000">,</font> gene<font color="#990000">|</font> fitness <font color="#990000">+=</font> gene <font color="#990000">?</font> <font color="#993399">1</font> <font color="#990000">:</font> <font color="#993399">0</font> <font color="#FF0000">}</font>
+    <b><font color="#0000FF">end</font></b>
+<b><font color="#0000FF">end</font></b>
+
+</tt></pre>
+</div>
+
+<p>Instead of a hillclimber we now use a genetic algorithm.</p>
+
+<p>This evolver needs a population instead of a single Individual, so we just create a population of 25 individuals. We also use our custom mutation and recombination.</p>
+
+<div class="codebox"><!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>
+evolver <font color="#990000">=</font> EvoSynth<font color="#990000">::</font>Evolvers<font color="#990000">::</font>GeneticAlgorithm<font color="#990000">.</font>new <b><font color="#0000FF">do</font></b> <font color="#990000">|</font>ga<font color="#990000">|</font>
+    ga<font color="#990000">.</font>evaluator         <font color="#990000">=</font> MyEvaluator<font color="#990000">.</font>new
+    ga<font color="#990000">.</font>mutation          <font color="#990000">=</font> MyMutation<font color="#990000">.</font>new
+    ga<font color="#990000">.</font>recombination     <font color="#990000">=</font> MyRecombination<font color="#990000">.</font>new
+    ga<font color="#990000">.</font>parent_selection  <font color="#990000">=</font> MySelection<font color="#990000">.</font>new
+    
+    ga<font color="#990000">.</font>population        <font color="#990000">=</font> EvoSynth<font color="#990000">::</font>Population<font color="#990000">.</font>new<font color="#990000">(</font><font color="#993399">25</font><font color="#990000">)</font> <font color="#FF0000">{</font>
+        EvoSynth<font color="#990000">::</font>MaximizingIndividual<font color="#990000">.</font>new<font color="#990000">(</font>
+                EvoSynth<font color="#990000">::</font>ArrayGenome<font color="#990000">.</font>new<font color="#990000">(</font><font color="#993399">64</font><font color="#990000">)</font> <font color="#FF0000">{</font> EvoSynth<font color="#990000">.</font>rand_bool <font color="#FF0000">}</font> <font color="#990000">)</font><font color="#FF0000">}</font>
+
+    <i><font color="#9A1900"># create a logger like in lesson 1:</font></i>
+    ga<font color="#990000">.</font>add_observer<font color="#990000">(</font>EvoSynth<font color="#990000">::</font>Logger<font color="#990000">.</font>create<font color="#990000">(</font><font color="#993399">25</font><font color="#990000">,</font> <b><font color="#0000FF">true</font></b><font color="#990000">,</font> <font color="#990000">:</font>gen<font color="#990000">,</font> <font color="#990000">:</font>best_fitness<font color="#990000">,</font> <font color="#990000">:</font>worst_fitness<font color="#990000">))</font>
+<b><font color="#0000FF">end</font></b>
+
+</tt></pre>
+</div>
+
+<p>Finally run the genetic algorithm and print the result after the evolution.</p>
+
+<p>The evolver will stop, when the fitness function got called 5000 times.</p>
+
+<div class="codebox"><!-- Generator: GNU source-highlight 3.1.4
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>
+puts <font color="#FF0000">"Running genetic algrithm..."</font>
+result <font color="#990000">=</font> evolver<font color="#990000">.</font>run_while <font color="#FF0000">{</font> <font color="#990000">|</font>ga<font color="#990000">|</font> ga<font color="#990000">.</font>evaluator<font color="#990000">.</font>called <font color="#990000">&lt;</font> <font color="#993399">5001</font> <font color="#FF0000">}</font>
+puts <font color="#FF0000">"Population after evolution:  #{result}"</font>
+
+</tt></pre>
+</div>
+		</div>
+		<div id="sidebar">
+			<h2>EvoSynth</h2>
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="/features/">Features</a></li>
+				<li><a href="/documentation/">Documentation</a></li>
+				<li><a href="/download/">Download</a></li>
+				<li><a href="/get_involved/">Get involved!</a></li>
+			</ul>
+
+			<h2>External</h2>
+			<ul>
+				<li><a href="https://yadler.wordpress.com/category/evosynth/" target="_blank">Development blog</a></li>
+				<li><a href="http://rubyforge.org/projects/evosynth/" target="_blank">Rubyforge project</a></li>
+				<li><a href="http://www.ohloh.net/p/evosynth" target="_blank">Ohloh statistics</a></li>
+			</ul>
+
+			<h2>Repositories</h2>
+			<ul>
+				<li><a href="http://github.com/yadler/EvoSynth" target="_blank">GitHub</a></li>
+				<li><a href="http://gitorious.org/evosynth" target="_blank">Gitorious</a></li>
+			</ul>
+
+	</body>
+</html>

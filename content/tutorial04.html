@@ -1,0 +1,87 @@
+--- 
+title: Meta-operators
+---
+
+<p>Load the EvoSynth library.</p>
+
+<% filter :src_filter do %>
+require 'evosynth'
+<% end %>
+
+<p>Let's optimize a SP_k Problem ...</p>
+
+<% filter :src_filter do %>
+class SPkFitnessEvaluator < EvoSynth::Evaluator
+    def initialize(k)
+        @k = k
+        super()
+    end
+
+    def calculate_fitness(individual)
+        EvoSynth::Problems::BinaryBenchmarkFuntions.sp_k(@k, individual.genome)
+    end
+end
+<% end %>
+
+<p>This time we use some constants to easily change the essential parameters:</p>
+
+<% filter :src_filter do %>
+K = 3
+GENOME_SIZE = 16
+GENERATIONS = 500
+POP_SIZE = 20
+<% end %>
+
+
+<p>Create a combined Mutation. This one will execute a Binary Mutation with a probability of 75%, the Exchange Mutation got only 25% probability.</p>
+
+<% filter :src_filter do %>
+meta_mutation = EvoSynth::MetaOperators::ProportionalCombinedOperator.new
+meta_mutation.add(EvoSynth::Mutations::BinaryMutation.new(
+        EvoSynth::Mutations::Functions::FLIP_BOOLEAN), 0.75)
+meta_mutation.add(EvoSynth::Mutations::ExchangeMutation.new, 0.25)
+<% end %>
+
+<p>Create a combined Rekombination. We "fake" a 2-Point-Crossover in 50% of the cases, because the second 1-Point Crossover got only 50% execution probability.</p>
+
+<% filter :src_filter do %>
+meta_recombination = EvoSynth::MetaOperators::SequentialCombinedOperator.new
+meta_recombination.add(EvoSynth::Recombinations::OnePointCrossover.new)
+meta_recombination.add(EvoSynth::Recombinations::OnePointCrossover.new, 0.5)
+<% end %>
+
+<p>Last but not least, we create a conditional Selection-Operator - sdont take this selection strategy too serious ;-)</p>
+
+<% filter :src_filter do %>
+meta_selection = EvoSynth::MetaOperators::ConditionalCombinedOperator.new
+meta_selection.add(EvoSynth::Evolvers::GeneticAlgorithm::DEFAULT_SELECTION) 
+            { Time.now.to_i % 2 == 1 }
+meta_selection.add(EvoSynth::Selections::RandomSelection.new)
+            { Time.now.to_i % 2 == 0 }
+<% end %>
+
+
+
+<p>Setup a Genetic Algorithm with weak Elistism:</p>
+
+<% filter :src_filter do %>
+evolver = EvoSynth::Evolvers::GeneticAlgorithm.new do |ga|
+    ga.population    = EvoSynth::Population.new(POP_SIZE) { 
+	    EvoSynth::MaximizingIndividual.new( 
+	        EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } ) }
+    ga.mutation         = meta_mutation
+    ga.recombination = meta_recombination
+    ga.evaluator     = SPkFitnessEvaluator.new(K)
+
+    ga.add_observer(EvoSynth::Logger.create(50, true, :gen, :best_fitness, :worst_fitness))
+    EvoSynth::Evolvers.add_weak_elistism(ga)
+end
+<% end %>
+
+<p>Let's roll...</p>
+
+<% filter :src_filter do %>
+puts "Running #{evolver}..."
+result = evolver.run_until_generations_reached(GENERATIONS)
+puts "Best found solution: #{result.best}"
+<% end %>
